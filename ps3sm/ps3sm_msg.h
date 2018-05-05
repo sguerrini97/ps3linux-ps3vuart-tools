@@ -1,5 +1,6 @@
 /*-
  * Copyright (C) 2011, 2012 glevand <geoffrey.levand@mail.ru>
+ * Copyright (C) 2018 sguerrini97 <sguerrini97@gmail.com>
  * All rights reserved.
  *
  * Redistribution and use in source and binary forms, with or without
