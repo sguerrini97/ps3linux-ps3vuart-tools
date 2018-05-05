@@ -37,6 +37,7 @@ enum ps3sm_service {
 	PS3SM_SID_SET_INTER_LPAR_PARAM	= 0x000a,
 	PS3SM_SID_CTL_LED		= 0x000c,
 	PS3SM_SID_RING_BUZZER		= 0x0015,
+	PS3SM_SID_GET_TEMPERATURE	= 0x000D,
 };
 
 enum ps3sm_request_type {
@@ -186,6 +187,30 @@ struct ps3sm_ring_buzzer {
 	uint8_t arg2;
 	uint8_t res;
 	uint32_t arg3;
+};
+
+#define PS3SM_GET_TEMPERATURE_VERSION	1
+
+struct ps3sm_get_temperature {
+	struct ps3sm_header hdr;
+	uint8_t version;
+	uint8_t arg;
+	uint8_t res;
+};
+
+#define PS3SM_GET_TEMPERATURE_STATUS_OK 0
+
+struct ps3sm_get_temperature_reply {
+	struct ps3sm_header hdr;
+
+	uint8_t version;
+	uint8_t tzone;
+	uint8_t status;
+	uint8_t pad_0;
+	
+	uint8_t temp_0;
+	uint8_t temp_1;
+	uint16_t pad_1;
 };
 
 static inline void

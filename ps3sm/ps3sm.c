@@ -50,10 +50,12 @@ extern struct cmd cmd_ctl_led;
 extern struct cmd cmd_get_inter_lpar_param;
 extern struct cmd cmd_ring_buzzer;
 extern struct cmd cmd_set_attr;
+extern struct cmd cmd_get_temperature;
 
 static struct cmd *cmdv[] = {
 	&cmd_ctl_led,
 	&cmd_get_inter_lpar_param,
+	&cmd_get_temperature,
 	&cmd_help,
 	&cmd_list,
 	&cmd_ring_buzzer,
