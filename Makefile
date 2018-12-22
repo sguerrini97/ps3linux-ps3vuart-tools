@@ -31,7 +31,7 @@ clean:
 .PHONY: install
 install: $(PS3SM) $(PS3AV) $(PS3DM)
 	install -d $(DESTDIR)$(PREFIX)/bin/
-	install -m 644 $(PS3SM) $(DESTDIR)$(PREFIX)/bin/
-	install -m 644 $(PS3AV) $(DESTDIR)$(PREFIX)/bin/
-	install -m 644 $(PS3DM) $(DESTDIR)$(PREFIX)/bin/
+	install -m 755 $(PS3SM) $(DESTDIR)$(PREFIX)/bin/
+	install -m 755 $(PS3AV) $(DESTDIR)$(PREFIX)/bin/
+	install -m 755 $(PS3DM) $(DESTDIR)$(PREFIX)/bin/
 
