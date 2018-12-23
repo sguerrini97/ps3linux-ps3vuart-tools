@@ -40,12 +40,12 @@ cmd_get_temperature_exec(int cmdc, struct cmd **cmdv, int argc, char **argv)
 	struct ps3sm_get_temperature get_temperature;
 	struct ps3sm_get_temperature_reply get_temperature_reply;
 
-	uint8_t arg;
+	uint8_t cell_rsx;
 	char *endptr;
 	int ret;
 
-	arg = strtoul(argv[0], &endptr, 0);
-	if (*endptr != '\0' || arg > 0xff)
+	cell_rsx = strtoul(argv[0], &endptr, 0);
+	if (*endptr != '\0' || cell_rsx > 1)
 		return (CMD_EINVAL);
 
 
@@ -54,7 +54,7 @@ cmd_get_temperature_exec(int cmdc, struct cmd **cmdv, int argc, char **argv)
 	    PS3SM_SID_GET_TEMPERATURE, 0);
 
 	get_temperature.version = PS3SM_GET_TEMPERATURE_VERSION;
-	get_temperature.arg = arg;
+	get_temperature.arg = cell_rsx;
 
 	ret = dev_write(&get_temperature, sizeof(get_temperature));
 	if (ret != sizeof(get_temperature))
@@ -64,10 +64,7 @@ cmd_get_temperature_exec(int cmdc, struct cmd **cmdv, int argc, char **argv)
 	if (ret < 0)
 		return (CMD_EIO);
 	
-	if (arg == 0)
-		fprintf(stdout, "CELL: %02d.%02d °C\n", get_temperature_reply.temp_0, ((get_temperature_reply.temp_1*0x64) >> 8));
-	else if (arg == 1)
-		fprintf(stdout, "RSX:  %02d.%02d °C\n", get_temperature_reply.temp_0, ((get_temperature_reply.temp_1*0x64) >> 8));
+	fprintf(stdout, "%02d.%02d\n", get_temperature_reply.temp_0, ((get_temperature_reply.temp_1*0x64) >> 8));
 
 	return (CMD_EOK);
 }
@@ -75,7 +72,7 @@ cmd_get_temperature_exec(int cmdc, struct cmd **cmdv, int argc, char **argv)
 struct cmd cmd_get_temperature = {
 	.name = "get_temperature",
 	.help = "get_temperature",
-	.usage = "get_temperature <arg1>",
+	.usage = "get_temperature <0 = cell, 1 = rsx>",
 
 	.min_argc = 1,
 	.max_argc = 1,
