@@ -51,7 +51,7 @@ cmd_set_fan_policy_exec(int cmdc, struct cmd **cmdv, int argc, char **argv)
 	if (*endptr1 != '\0' || *endptr2 != '\0' || *endptr3 != '\0')
 		return (CMD_EINVAL);
 
-	if (arg2 == 2 && (arg2 < 0x33 || arg2 > 0xfc))
+	if (arg2 == 2 && (arg3 < 0x33 || arg3 > 0xfc))
 	{
 		fprintf(stderr, "Dangerous fan speed, aborting\n");
 		return (CMD_EINVAL);
