@@ -48,8 +48,14 @@ cmd_set_fan_policy_exec(int cmdc, struct cmd **cmdv, int argc, char **argv)
 	arg2 = strtoul(argv[1], &endptr2, 0);
 	arg3 = strtoul(argv[2], &endptr3, 0);
 
-	if (*endptr1 != '\0' || *endptr2 != '\0' || *endptr3 != '\0' || arg1 > 0xff || arg2 > 0xff || arg3 > 0xff)
+	if (*endptr1 != '\0' || *endptr2 != '\0' || *endptr3 != '\0')
 		return (CMD_EINVAL);
+
+	if (arg2 == 2 && (arg2 < 0x33 || arg2 > 0xfc))
+	{
+		fprintf(stderr, "Dangerous fan speed, aborting\n");
+		return (CMD_EINVAL);
+	}
 
 	ps3sm_init_header(PS3SM_HDR(&set_fan_policy),
     	sizeof(set_fan_policy) - sizeof(struct ps3sm_header),
